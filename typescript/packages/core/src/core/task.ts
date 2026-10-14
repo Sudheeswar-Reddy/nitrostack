@@ -153,6 +153,8 @@ export class TaskManager {
 
         // Start periodic cleanup of expired tasks
         this.cleanupInterval = setInterval(() => this.cleanupExpiredTasks(), 30000);
+        // Expiration housekeeping must not keep an otherwise idle process alive.
+        this.cleanupInterval.unref();
     }
 
     /**

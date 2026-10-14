@@ -486,10 +486,11 @@ describe('collectFilesToPack', () => {
     await fs.writeFile(path.join(outsideDir, 'secret.txt'), 'nope');
 
     try {
-      await fs.symlink(outsideDir, path.join(projectDir, 'escape-link'));
-      await fs.symlink(path.join(projectDir, 'loop-b'), path.join(projectDir, 'loop-a'));
-      await fs.symlink(path.join(projectDir, 'loop-a'), path.join(projectDir, 'loop-b'));
-      await fs.symlink(path.join(projectDir, 'inside'), path.join(projectDir, 'alias-inside'));
+      const linkType = process.platform === 'win32' ? 'junction' : 'dir';
+      await fs.symlink(outsideDir, path.join(projectDir, 'escape-link'), linkType);
+      await fs.symlink(path.join(projectDir, 'loop-b'), path.join(projectDir, 'loop-a'), linkType);
+      await fs.symlink(path.join(projectDir, 'loop-a'), path.join(projectDir, 'loop-b'), linkType);
+      await fs.symlink(path.join(projectDir, 'inside'), path.join(projectDir, 'alias-inside'), linkType);
 
       const matcher = buildIgnoreMatcher('');
       const collection = await collectFilesToPack(projectDir, matcher);

@@ -83,35 +83,32 @@ Building MCP servers today means stitching together boilerplate, reinventing aut
 ## See It in Action
 
 ```typescript
-import { McpApp, Module, ToolDecorator as Tool, z, ExecutionContext } from '@nitrostack/core';
+import 'reflect-metadata';
+import {
+  McpApp, Module, McpApplicationFactory,
+  ToolDecorator as Tool, z,
+} from '@nitrostack/core';
 
-@McpApp({
-  module: AppModule,
-  server: { name: 'my-server', version: '1.0.0' }
-})
-@Module({ imports: [] })
-export class AppModule {}
-
-export class SearchTools {
+class CalculatorTools {
   @Tool({
-    name: 'search_products',
-    description: 'Search the product catalog',
-    inputSchema: z.object({
-      query: z.string().describe('Search query'),
-      maxResults: z.number().default(10)
-    })
+    name: 'add',
+    description: 'Add two numbers',
+    inputSchema: z.object({ a: z.number(), b: z.number() }),
   })
-  @UseGuards(ApiKeyGuard)
-  @Cache({ ttl: 300 })
-  @Widget('product-grid')
-  async search(input: { query: string; maxResults: number }, ctx: ExecutionContext) {
-    ctx.logger.info('Searching products', { query: input.query });
-    return this.productService.search(input.query, input.maxResults);
+  async add(input: { a: number; b: number }) {
+    return { result: input.a + input.b };
   }
 }
+
+@McpApp({ module: AppModule, server: { name: 'calculator', version: '1.0.0' } })
+@Module({ name: 'app', controllers: [CalculatorTools] })
+class AppModule {}
+
+const server = await McpApplicationFactory.create(AppModule);
+await server.start();
 ```
 
-One decorator stack gives you: **API definition + validation + auth + caching + UI** — zero boilerplate.
+This example registers a controller, validates its input schema, and starts the server. Guards, caching and widgets can be added when the application needs them.
 
 ## Ecosystem
 
@@ -157,6 +154,9 @@ Talk to your MCP server through an integrated AI assistant.
 - **Hot reload** — Changes reflect in real time as you develop
 
 ## Documentation
+
+See the [code review and architecture report](docs/CODE_REVIEW_REPORT.md) for an explanation of this checkout, its fixes and verification.
+
 
 | Resource | Description |
 |:---|:---|

@@ -24,10 +24,10 @@
     "assets"
   ],
   "scripts": {
-    "build": "tsc && chmod +x dist/index.js dist/pack/standalone.js",
+    "build": "tsc && node -e \"if (process.platform !== 'win32') { const fs = require('node:fs'); for (const file of ['dist/index.js', 'dist/pack/standalone.js']) fs.chmodSync(file, 0o755); }\"",
     "dev": "tsc --watch",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

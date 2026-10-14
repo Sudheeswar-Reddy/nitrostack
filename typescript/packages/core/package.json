@@ -26,9 +26,10 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "prepublishOnly": "npm run build"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "prepublishOnly": "npm run build",
+    "test:smoke": "npm run build && node scripts/check-import-exit.mjs"
   },
   "keywords": [
     "mcp",
@@ -45,7 +46,7 @@
   "author": "Nitrostack Inc <hello@nitrostack.ai>",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@modelcontextprotocol/ext-apps": ">=0.1.0"
+    "@modelcontextprotocol/ext-apps": ">=0.1.0 <2.0.0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",

@@ -62,16 +62,13 @@ cd nitrostack
 cd typescript
 
 # 3. Install dependencies
-npm install
+npm run install:all
 
 # 4. Build all packages
 npm run build
 
-# 5. Run the dev server
-npm run dev
-
-# 6. Run the test suite
-npm test
+# 5. Run all package test suites
+npm run test:all
 ```
 
 ### Useful Commands
@@ -79,10 +76,10 @@ npm test
 | Command | What it does |
 |:---|:---|
 | `npm run build` | Build all packages |
-| `npm run dev` | Start dev server with hot reload |
-| `npm test` | Run the full test suite |
-| `npm run lint` | Lint the codebase |
-| `npm run format` | Auto-format with Prettier |
+| `npm run install:all` | Install dependencies in all three packages |
+| `npm test` | Run core SDK tests |
+| `npm run test:all` | Run core, widget and CLI tests |
+
 
 ## Project Structure
 
@@ -105,7 +102,7 @@ nitrostack/
 
 ### Working with Individual Packages
 
-This is a monorepo. To work on a specific package:
+The packages have separate dependency installations. Root `dev`, `lint` and `format` scripts are not defined; run a scaffolded application for development. To work on a specific package:
 
 ```bash
 # Navigate to the package

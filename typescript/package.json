@@ -12,7 +12,9 @@
     "build": "cd packages/core && npm run build && cd ../widgets && npm run build && cd ../cli && npm run build",
     "test": "cd packages/core && npm run test",
     "test:coverage": "cd packages/core && npm run test:coverage",
-    "link:all": "npm run build && cd packages/core && npm link && cd ../widgets && npm link && cd ../cli && npm link"
+    "link:all": "npm run build && cd packages/core && npm link && cd ../widgets && npm link && cd ../cli && npm link",
+    "test:all": "npm test --prefix packages/core -- --runInBand && npm test --prefix packages/widgets -- --runInBand && npm test --prefix packages/cli -- --runInBand",
+    "install:all": "npm install --prefix packages/core && npm install --prefix packages/widgets && npm install --prefix packages/cli"
   },
   "keywords": [
     "mcp",

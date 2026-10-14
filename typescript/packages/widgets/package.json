@@ -20,9 +20,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "prepublishOnly": "npm run build && npm run test"
   },
   "keywords": [
@@ -38,7 +38,7 @@
   "license": "Apache-2.0",
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "@modelcontextprotocol/ext-apps": ">=0.1.0"
+    "@modelcontextprotocol/ext-apps": ">=0.1.0 <2.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

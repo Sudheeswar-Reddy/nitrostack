@@ -1,5 +1,8 @@
 # NitroStack Documentation
 
+For an explanation of this checkout's architecture, review fixes and test
+results, read the [code review report](CODE_REVIEW_REPORT.md).
+
 NitroStack is an enterprise-grade framework for building MCP (Model Context Protocol) servers with TypeScript. It provides a comprehensive toolkit including decorators, dependency injection, middleware, authentication, and visual widget components.
 
 ## Package Architecture

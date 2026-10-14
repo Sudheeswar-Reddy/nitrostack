@@ -76,7 +76,9 @@ export class InMemoryRateLimitStorage implements RateLimitStorage {
 const defaultStorage = new InMemoryRateLimitStorage();
 
 // Cleanup every minute
-setInterval(() => defaultStorage.cleanup(), 60000);
+const cleanupTimer = setInterval(() => defaultStorage.cleanup(), 60000);
+// Housekeeping should not keep a CLI or a stopped server process alive.
+cleanupTimer.unref();
 
 /**
  * Parse time window string to milliseconds
